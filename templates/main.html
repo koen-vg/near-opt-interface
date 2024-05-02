@@ -1,0 +1,315 @@
+<!--
+SPDX-FileCopyrightText: 2024 Koen van Greevenbroek
+SPDX-FileContributor: Aleksander Grochowicz
+SPDX-FileContributor: Maximilian Roithner
+SPDX-FileContributor: Oskar Vågerö
+
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slider Outputs</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='lib/nouislider.min.css') }}"
+    />
+    <script src="{{ url_for('static', filename='lib/nouislider.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/chroma.min.js') }}"></script>
+  </head>
+
+  <body>
+    <h1>Inferface for exploring near-optimal solutions</h1>
+
+    <ol>
+      <li>
+        With the sliders in the interface, you can adjust the investment in
+        various system components. Drag the slider to the left to decrease
+        investment of a technology, and drag to the right to increase it.
+      </li>
+      <li>
+        Whenever you drag the slider, the metrics on the right will be
+        recomputed. They are designed to help you evaluate the configuration you
+        have chosen. The lower the value of each metric (and smaller the bar),
+        the better is the system in this regard.
+      </li>
+      <li>
+        Note that there are more technologies considered in this framework (e.g.
+        diesel, geothermal), but their values are computed in their background.
+      </li>
+      <li>
+        Segments of the slider will turn red depending on the values of the
+        other technologies. This means that a investment combination is not
+        possible (or too expensive).
+      </li>
+      <li>
+        If you want to return to the initial solution and re-adjust from
+        scratch, please press the "reset" button.
+      </li>
+      <li>
+        Once you are satisfied with your system configuration, please proceed
+        with the "submit" button.
+      </li>
+    </ol>
+    <div style="margin-top: 30px">
+      <h2>Legend:</h2>
+      <img
+        src="{{ url_for('static', filename='graphics/legend.svg') }}"
+        alt="Legend"
+        style="width: 400px; margin-top: 10px"
+      />
+    </div>
+    <div class="container">
+      <div class="column">
+        <form id="sliderForm" method="post">
+          {% for slider in slider_names %}
+          <div class="slider-wrapper">
+            <div>
+              <label for="{{ slider }}">
+                {{ slider_names_pretty[slider] }}:
+                <span id="{{ slider }}_value_label" style="font-weight: bold"
+                  >-</span
+                >
+                Million NOK yearly {% if slider in slider_context_text %} ({{
+                slider_context_text[slider] }}:
+                <span id="{{ slider }}_context_value_label">-</span>) {% endif
+                %}
+                <span class="info-icon" title="{{ slider_info[slider] }}"
+                  >i</span
+                >
+              </label>
+              <div id="{{ slider }}" class="slider"></div>
+            </div>
+            <div class="slider-max-value">
+              <span id="{{ slider }}_max_value_label">-</span>
+            </div>
+          </div>
+          {% endfor %}
+          <div class="buttons">
+            <input class="button" type="button" id="reset" value="Reset" />
+            <input
+              class="button"
+              type="submit"
+              id="save"
+              name="save"
+              value="Submit response"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="column">
+        <div id="computedOutputs" class="output-container">
+          <div class="output-container">
+            {% for output in output_names %}
+            <div id="{{ output }}_bar" class="bar"></div>
+            {% endfor %} {% for output in output_names %}
+            <div class="output-item">
+              <p>
+                {{ output_names_pretty[output] }}:<span
+                  class="info-icon"
+                  title="{{ output_info[output] }}"
+                  >i</span
+                ><br />
+                <span
+                  id="{{ output }}"
+                  style="font-size: 30px; font-weight: bold"
+                  >{{ outputs[output] }}</span
+                ><br />
+                {{ output_units[output] }}
+              </p>
+            </div>
+            {% endfor %}
+            {% for output in output_names %}
+            <input
+              class="min-button"
+              type="button"
+              id={{ "min_" + output }}
+              value="Minimise"
+            />
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Pass variables to javascript
+      var slider_names = {{ slider_names | tojson }};
+      var slider_names_pretty = {{ slider_names_pretty | tojson }};
+      var slider_info = {{ slider_info | tojson }};
+      var slider_context_scale = {{ slider_context_scale | tojson }};
+      var slider_ranges = {{ slider_ranges | tojson }};
+      var slider_defaults = {{ slider_defaults | tojson }};
+      var slider_opt_values = {{ slider_opt_values | tojson }};
+      var output_names = {{ output_names | tojson }};
+      var output_names_pretty = {{ output_names_pretty | tojson }};
+      var output_info = {{ output_info | tojson }};
+      var output_max_values = {{ output_max_values | tojson }};
+      var output_scaling_factors = {{ output_scaling_factors | tojson }};
+    </script>
+    <script src="{{ url_for('static', filename='js/ui.js') }}"></script>
+  </body>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    .container {
+      display: flex;
+    }
+
+    .column {
+      flex: 1;
+      padding: 50px;
+    }
+
+    .output-container {
+      .output-container {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        grid-template-rows: 300px auto auto;
+        gap: 10px;
+        align-items: end;
+      }
+
+      .bar {
+        grid-row: 1;
+        width: 100%;
+        background-color: #4caf50;
+      }
+
+      .output-item {
+        grid-row: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-self: start;
+      }
+
+      .output-icon {
+        height: 60px;
+        margin: auto;
+      }
+    }
+
+    .info-icon {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: #1162b8;
+      /* Blue background color */
+      color: #ffffff;
+      /* White text color */
+      text-align: center;
+      line-height: 12px;
+      border-radius: 200%;
+      /* Make the icon round */
+      cursor: help;
+      /* Add a help cursor to indicate it's clickable */
+      padding: 10px;
+      /* Add padding to increase the hover area */
+    }
+
+    .info-icon:hover {
+      /* Tooltip styles */
+      background-color: #1162b8;
+      /* Blue background color */
+      color: #ffffff;
+      /* White text color */
+      position: relative;
+      z-index: 1;
+      white-space: nowrap;
+      opacity: 1;
+    }
+
+    .slider-wrapper {
+      display: flex;
+      align-items: center;
+      margin-bottom: 60px;
+      /* Spacing between sliders */
+    }
+
+    .slider {
+      width: 40vw;
+      margin-top: 10px;
+    }
+
+    .slider-icon {
+      height: 50px;
+      margin-right: 20px;
+    }
+
+    /* Align slider max value vertically at bottom */
+    .slider-max-value {
+      display: flex;
+      align-self: flex-end;
+      margin-left: 10px;
+      color: #666666;
+    }
+
+    .noUi-marker-horizontal.noUi-marker-large {
+      height: 7px;
+    }
+
+    #save {
+      /* extra space above the save button */
+      margin-top: 60px;
+
+      /* make the button look nice, but maintain hoover effect */
+      background-color: #4caf50;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #save:hover {
+      background-color: #3e8e41;
+    }
+
+    #reset {
+      /* extra space above the reset button */
+      margin-top: 60px;
+
+      /* make the button look nice, but maintain hoover effect */
+      background-color: #f44336;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .min-button {
+      margin-top: 10px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      padding: 2px 4px;
+      text-align: center;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .min-button:hover {
+      background-color: #0056b3;
+    }
+
+    /* right-align the buttons */
+    .buttons {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .button {
+      margin-right: 20px;
+    }
+  </style>
+</html>

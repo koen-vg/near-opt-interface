@@ -1,0 +1,76 @@
+<!--
+SPDX-FileCopyrightText: 2024 Koen van Greevenbroek
+SPDX-FileContributor: Aleksander Grochowicz
+SPDX-FileContributor: Maximilian Roithner
+SPDX-FileContributor: Oskar Vågerö
+
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
+<!doctype html>
+<html>
+  <head>
+    <title>Interface for near-optimal solutions</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      .container {
+        width: 80%;
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: left;
+        padding: 20px;
+      }
+
+      h1 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      p {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 10px;
+      }
+
+      a,
+      button {
+        display: inline-block;
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 4px;
+        border: none;
+        cursor: pointer;
+      }
+
+      a:hover,
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Inferface for exploring near-optimal solutions</h1>
+
+      <p>
+        This webpage represents a proof-of-concept for an interface to explore
+        near-optimal energy system solutions.
+      </p>
+
+      <p>
+        The dataset provided as part of this interface was created using a model
+        for the Longyearbyen energy system; you are free to substitute this with
+        your own data.
+      </p>
+
+      <a href="{{ url_for('questionnaire') }}">Continue</a>
+    </div>
+  </body>
+</html>

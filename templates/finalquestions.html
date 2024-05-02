@@ -1,0 +1,159 @@
+<!--
+SPDX-FileCopyrightText: 2024 Koen van Greevenbroek
+SPDX-FileContributor: Aleksander Grochowicz
+SPDX-FileContributor: Maximilian Roithner
+SPDX-FileContributor: Oskar Vågerö
+
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
+<!doctype html>
+<html>
+  <head>
+    <title>Thank You</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      .container {
+        width: 80%;
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .container_left {
+        width: 80%;
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: left;
+      }
+
+      h1 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        color: #333;
+        font-size: 16px;
+        margin-bottom: 20px;
+      }
+
+      p {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      textarea {
+        width: 90%;
+        height: 100px;
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        resize: vertical;
+      }
+
+      button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Thank You!</h1>
+      <p>Your submission has been received.</p>
+    </div>
+    <!-- Form to submit additional questionnaire data -->
+    <div class="container_left">
+      <form action="/finalquestions" method="post">
+        <input
+          type="hidden"
+          name="previous_data_file"
+          value="{{ previous_data_file }}"
+        />
+        <h2>Questionnaire</h2>
+        <p>
+          When you submitted your preferred system configuration (i.e. the
+          specific investment in different technologies), you could see some
+          pre-computed metrics and you might care about all of them. If they
+          impacted your choice, please specify:
+        </p>
+        <p>
+          What metrics were prioritised in your feedback? (Please check 1-3
+          metrics.)
+        </p>
+        <label
+          ><input type="checkbox" name="slack" value="yes" />Additional
+          cost</label
+        ><br />
+        <label
+          ><input type="checkbox" name="elec" value="yes" />Electricity
+          price</label
+        ><br />
+        <label
+          ><input type="checkbox" name="heat" value="yes" />Heat price</label
+        ><br />
+        <label
+          ><input
+            type="checkbox"
+            name="emissions"
+            value="yes"
+          />Emissions</label
+        ><br />
+        <label
+          ><input
+            type="checkbox"
+            name="vulnerability"
+            value="yes"
+          />Vulnerability</label
+        ><br />
+        <label
+          ><input type="checkbox" name="visual" value="yes" />Visual
+          impact</label
+        ><br />
+        <label
+          ><input type="checkbox" name="landuse" value="yes" />Land use</label
+        ><br />
+        <br /><br />
+        <p>
+          The methodology we are using to give you options and alternatives to
+          consider the above metrics relies on so-called near-optimal systems.
+          These are slightly more expensive, but can have other desirable
+          qualities (illustrated by the metrics).
+        </p>
+        <label
+          >How much are you willing to pay more to have your other priorities
+          considered? [in %]</label
+        ><br />
+        <input
+          type="number"
+          name="willingness_to_pay"
+          placeholder="% Increase"
+        />
+        <br /><br />
+        <button
+          type="submit"
+          id="submit-questionnaire"
+          name="submit-questionnaire"
+        >
+          Submit Questionnaire
+        </button>
+      </form>
+    </div>
+  </body>
+</html>

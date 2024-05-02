@@ -1,0 +1,18 @@
+# SPDX-FileCopyrightText: 2024 Koen van Greevenbroek
+#
+# SPDX-License-Identifier: CC0-1.0
+
+name: near-opt-interface
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python>=3.12
+  - pip
+
+  - flask
+  - pandas
+  - numpy
+  - scikit-learn
+  

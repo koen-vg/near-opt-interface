@@ -1,0 +1,92 @@
+<!--
+SPDX-FileCopyrightText: 2024 Koen van Greevenbroek
+SPDX-FileContributor: Aleksander Grochowicz
+SPDX-FileContributor: Maximilian Roithner
+SPDX-FileContributor: Oskar Vågerö
+
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
+<!doctype html>
+<html>
+  <head>
+    <title>Thank You</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      .container {
+        width: 80%;
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .container_left {
+        width: 80%;
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: left;
+      }
+
+      h1 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        color: #333;
+        font-size: 16px;
+        margin-bottom: 20px;
+      }
+
+      p {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      textarea {
+        width: 90%;
+        height: 100px;
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        resize: vertical;
+      }
+
+      button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Thank You!</h1>
+      <p>Your submission has been received.</p>
+    </div>
+
+    <div class="container">
+      <button onclick="restartButton()">Restart</button>
+    </div>
+
+    <script>
+      function restartButton() {
+        window.location.href = "/"; // Redirect to the index page
+      }
+    </script>
+  </body>
+</html>

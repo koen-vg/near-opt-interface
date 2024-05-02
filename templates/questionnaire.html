@@ -1,0 +1,185 @@
+<!--
+SPDX-FileCopyrightText: 2024 Koen van Greevenbroek
+SPDX-FileContributor: Aleksander Grochowicz
+SPDX-FileContributor: Maximilian Roithner
+SPDX-FileContributor: Oskar Vågerö
+
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Inferface for exploring near-optimal solutions</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+
+      .container {
+        width: 80%;
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: left;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      p {
+        text-align: justify;
+        margin-bottom: 20px;
+      }
+
+      form {
+        max-width: 400px;
+        margin: 0;
+      }
+
+      label {
+        display: inline-block;
+        width: 400px;
+      }
+
+      input[type="number"],
+      input[type="text"],
+      select {
+        width: 400px;
+        padding: 5px;
+        margin-bottom: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        box-sizing: border-box;
+        /* Include padding and border in the element's total width */
+      }
+
+      #ageWarning {
+        color: red;
+        font-style: italic;
+        display: none;
+        margin-bottom: 10px;
+      }
+
+      input[type="submit"],
+      button {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+
+      input[type="submit"]:hover,
+      button:hover {
+        background-color: #45a049;
+      }
+
+      button {
+        background-color: #f44336;
+      }
+
+      .info-icon {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        background-color: #1162b8;
+        /* Blue background color */
+        color: #fff;
+        /* White text color */
+        text-align: center;
+        line-height: 15px;
+        border-radius: 50%;
+        /* Make the icon round */
+        cursor: help;
+        /* Add a help cursor to indicate it's clickable */
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Inferface for exploring near-optimal solutions</h1>
+
+      <p>We collect some demographic data; adapt this to your needs.</p>
+
+      <form action="/main" method="post">
+        <label for="age"
+          >Age*:<span class="info-icon" title="Please enter your age"
+            >i</span
+          ></label
+        >
+        <input
+          type="number"
+          id="age"
+          name="age"
+          required
+          min="16"
+          oninput="validateAge()"
+        />
+        <span id="ageWarning"
+          >You need to be at least 16 to participate in this study!</span
+        >
+        <br /><br />
+
+        <label for="gender"
+          >Gender*<span class="info-icon" title="Please select your gender"
+            >i</span
+          ></label
+        >
+        <select id="gender" name="gender" required>
+          <option value="">-- Select gender --</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+          <option value="not-tell">Prefer not to tell</option>
+        </select>
+        <br /><br />
+
+        <label for="education"
+          >What is your highest level of completed education?*<span
+            class="info-icon"
+            title="Information on the level of education is relevant as it provides insights into participants' perspectives"
+            >i</span
+          ></label
+        >
+        <select id="education" name="education" required>
+          <option value="">-- Select education --</option>
+          <option value="primary">Primary education</option>
+          <option value="secondary">Secondary education</option>
+          <option value="voc-college">Vocational education / college</option>
+          <option value="university">University</option>
+          <option value="phd">PhD</option>
+          <option value="other">Other professional qualifications</option>
+        </select>
+        <br /><br />
+
+        <input type="submit" value="Submit" />
+        <button onclick="goBack()">Back</button>
+
+        <script>
+          function goBack() {
+            window.history.back();
+          }
+        </script>
+
+        <script>
+          function validateAge() {
+            var ageInput = document.getElementById("age");
+            var ageWarning = document.getElementById("ageWarning");
+
+            if (ageInput.value < 16) {
+              ageWarning.style.display = "inline"; // show warning
+            } else {
+              ageWarning.style.display = "none"; // hide warning
+            }
+          }
+        </script>
+      </form>
+    </div>
+  </body>
+</html>
