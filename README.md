@@ -14,7 +14,7 @@ The interface presented here contains the same basic elements as the one used in
 
 The data used in [arXiv:2501.05280](https://arxiv.org/abs/2501.05280) are as follows:
 - We used Svalbard Energi's PyPSA-LYB model, developed by Haakon Duus and Jonas Blomberg Ghini at Multiconsult. (Link to repo coming soon.)
-- We adapted and further developed the workflow developed in [Grochowicz et al., 2023. Intersecting near-optimal spaces: European power systems with more resilience to weather variability](https://doi.org/10.1016/j.eneco.2022.106496) and [van Greevenbroek et al., 2023](https://arxiv.org/abs/2312.11264) to approximate the near-optimal feasible spaces. (Link to repo based on (aleks-g/intersecting-near-opt-spaces)[https://github.com/aleks-g/intersecting-near-opt-spaces/tree/main] and (koen-vg/enabling-agency)[https://github.com/koen-vg/enabling-agency] coming soon.)
+- We adapted and further developed the workflow developed in [Grochowicz et al., 2023. Intersecting near-optimal spaces: European power systems with more resilience to weather variability](https://doi.org/10.1016/j.eneco.2022.106496) and [van Greevenbroek et al., 2023](https://arxiv.org/abs/2312.11264) to approximate the near-optimal feasible spaces. (Link to repo based on [aleks-g/intersecting-near-opt-spaces](https://github.com/aleks-g/intersecting-near-opt-spaces/tree/main) and [koen-vg/enabling-agency](https://github.com/koen-vg/enabling-agency) coming soon.)
 - We used the interface as presented in this repository, and added a questionnaire regarding demographics before the participants interacted with the interface, as well as a post-study questionnaire surveying the priorities of the participants. (Coming soon in the supplementary material.)
 
 
