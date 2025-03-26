@@ -75,6 +75,14 @@ The solution is to use some linear interpolation. When a slider value changes, t
     ```
 4. Open the interface in your browser at `http://localhost:5000/`
 
+# System requirements
+
+The code in this repository requires very little computational resources, and should be possible to run on a personal computer. It requires less than 500 MB of RAM and is not CPU intensive. 
+
+The code has been tested for the following system: 
+* *Linux* : Ubuntu 24.04 
+
+Each individual step of cloning the repository, installing the conda environment and launching the application should take less than a minute.
 
 # Licenses
 
